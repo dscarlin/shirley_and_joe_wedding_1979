@@ -11,6 +11,7 @@
 </head>
 <body>
     <script>
+function playAudio(){
     $('<audio>').attr({
         'src': 'assets/Joe and Shirley Carlin June 16 1979(clipped) copy.mp3',
         'style':'display:none',
@@ -19,6 +20,8 @@
     .appendTo($('body'))
     .trigger('play');
 
+}
+    playAudio();
     $.backstretch(
         [
             'https://www.theknotnews.com/wp-content/uploads/2018/07/Scotty-McCreery-Wedding-LEAD-1500x1200.jpg',
@@ -30,7 +33,10 @@
         }
         )
         
-            
+$('body').on('touchstart',()=>{
+    $('audio').remove();
+    playAudio();
+})  
     </script>
 </body>
 </html>
