@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    
+</head>
+<body>
+    <script>
+    $('<audio>').attr({
+        'src': 'assets/Joe and Shirley Carlin June 16 1979(clipped) copy.mp3',
+        'style':'display:none',
+        'loop':true})
+    .prop('volume', 0.1)
+    .appendTo($('body'))
+    .trigger('play');
+
+    $.backstretch(
+        [
+            'https://www.theknotnews.com/wp-content/uploads/2018/07/Scotty-McCreery-Wedding-LEAD-1500x1200.jpg',
+            'https://media.brides.com/photos/5b8038a9a3f22572fe06f360/1:1/w_854/julianne-and-kristian-wedding01.jpg'
+        ],
+        {
+        duration: 3000,
+        fade:900 
+        }
+        )
+        
+            
+    </script>
+</body>
+</html>
