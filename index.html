@@ -15,7 +15,7 @@
             background: aliceblue;
             font-family:fantasy;
             border-radius: 1em;
-            padding: 1em 1em 1em 1em;
+            padding: 1em;
             transition: 1s
         }
         p, h2, h1 {
@@ -31,6 +31,7 @@
         }
         #audioPlayModal, #audioPauseModal{
             float: right;
+            padding: 0 1em;
         }
         @media only screen and (max-width: 768px){
             #infoModal {
@@ -63,7 +64,7 @@
                 <div class="modal-content">
                 <div class="modal-body text-center ">
                     <p>Audio Started!</p>
-                    <p><small>* allow a 5 second delay for ios devices *</small></p>
+                    <p id="delay"><small>* allow a delay for ios devices *</small></p>
                 </div>
                 </div>
             </div>
@@ -77,6 +78,10 @@
                 </div>
             </div>
         </div>
+        <audio id="audio" style='display:none' loop='true' preload='metadata' volume='1'>
+            <source src='assets/Joe and Shirley Carlin June 16 1979(clipped) copy.mp3' type='audio/mpeg'/>
+            <source src='assets/Joe and Shirley Carlin June 16 1979(clipped) copy.ogg' type='audio/ogg'/>
+        </audio>
     <script>
 $('#infoModal').show();
 setTimeout(()=>{$('#infoModal').hide()}, 8000);
@@ -91,31 +96,22 @@ $.backstretch([
     fade:900 
 });
 
-$('<audio>').attr({
-        id: 'audio',
-        'src': 'assets/Joe and Shirley Carlin June 16 1979(clipped) copy.mp3',
-        'style':'display:none',
-        'loop':true})
-.prop('volume', 1)
-.appendTo($('body'));
-
 let playing = false
-// $('body').on('touchstart',toggleAudio);
 $('body').on('click',toggleAudio);
 function toggleAudio(){
     $('.modal').hide()
     if (playing){
         $('#audio').trigger('pause');
         playing = false;
-        $('#audioPauseModal').addClass('right').show();
-        setTimeout(()=>{$('#audioPauseModal').removeClass('right').hide()}, 2000);
+        $('#audioPauseModal').show();
+        setTimeout(()=>{$('#audioPauseModal').hide()}, 2000);
 
     }   
     else{
         $('#audio').trigger('play')
         playing = true;
-        $('#audioPlayModal').addClass('right').show();
-        setTimeout(()=>{$('#audioPlayModal').removeClass('right').hide()}, 3000);
+        $('#audioPlayModal').show();
+        setTimeout(()=>{$('#audioPlayModal').hide(); $('#delay').remove()}, 3000);
     }
 } 
     </script>
