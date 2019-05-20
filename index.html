@@ -5,38 +5,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
-    
+    <style>
+        .modal{
+            
+            width: fit-content;
+            background: aliceblue;
+            font-family:fantasy;
+            border-radius: 1em;
+            padding: 1em 1em 1em 1em;
+            transition: 1s
+        }
+        p, h2, h1 {
+            text-align: center;
+        }
+        #frame {
+            border: .5em groove gold;
+        }
+        #infoModal {
+            margin: auto;
+            margin-top: 4em;
+        }
+        #audioPlayModal, #audioPauseModal{
+            float: right;
+        }
+    </style>
 </head>
 <body>
+        <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" style="display:none">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class=" text-center ">
+                
+                    <img id="frame" src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/harryandmeghanmoment-1526748540.jpg?crop=1.00xw:0.752xh;0,0.103xh&resize=980:*'/>
+                    <h2>We are pleased to Celebrate 40 years of Matrimony For</h2>
+                    <h1>Joe and Shirley Carlin</h1>
+                    <p>Touch or click the screen to start and stop</p>
+                    <p> the audio of Joe and Shirley's Wedding</p>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="audioPlayModal" tabindex="-1" role="dialog" style="display:none">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-body text-center ">
+                    <p>Audio Started!</p>
+                    <p><small>* allow a 5 second delay for ios devices *</small></p>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="audioPauseModal" tabindex="-1" role="dialog" style="display:none">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-body text-center ">
+                    <p>Audio Paused!</p>
+                </div>
+                </div>
+            </div>
+        </div>
     <script>
-function playAudio(){
-    $('<audio>').attr({
+$('#infoModal').show();
+
+// setTimeout(()=>{$('#infoModal').hide()}, 8000);
+
+
+$.backstretch([
+    'https://www.theknotnews.com/wp-content/uploads/2018/07/Scotty-McCreery-Wedding-LEAD-1500x1200.jpg',
+    'https://media.brides.com/photos/5b8038a9a3f22572fe06f360/1:1/w_854/julianne-and-kristian-wedding01.jpg'
+    ],
+    {
+    duration: 3000,
+    fade:900 
+});
+
+$('<audio>').attr({
+        id: 'audio',
         'src': 'assets/Joe and Shirley Carlin June 16 1979(clipped) copy.mp3',
         'style':'display:none',
         'loop':true})
-    .prop('volume', 1)
-    .appendTo($('body'))
-    .trigger('play');
+.prop('volume', 1)
+.appendTo($('body'));
 
-}
-    playAudio();
-    $.backstretch(
-        [
-            'https://www.theknotnews.com/wp-content/uploads/2018/07/Scotty-McCreery-Wedding-LEAD-1500x1200.jpg',
-            'https://media.brides.com/photos/5b8038a9a3f22572fe06f360/1:1/w_854/julianne-and-kristian-wedding01.jpg'
-        ],
-        {
-        duration: 3000,
-        fade:900 
-        }
-        )
-        
-$('body').on('touchstart',()=>{
-    $('audio').remove();
-    playAudio();
-})  
+let playing = false
+$('body').on('touchstart',toggleAudio);
+$('body').on('click',toggleAudio);
+function toggleAudio(){
+    $('.modal').hide()
+    if (playing){
+        $('#audio').trigger('pause');
+        playing = false;
+        $('#audioPauseModal').addClass('right').show();
+        setTimeout(()=>{$('#audioPauseModal').removeClass('right').hide()}, 2000);
+
+    }   
+    else{
+        $('#audio').trigger('play')
+        playing = true;
+        $('#audioPlayModal').addClass('right').show();
+        setTimeout(()=>{$('#audioPlayModal').removeClass('right').hide()}, 3000);
+    }
+} 
     </script>
 </body>
 </html>
