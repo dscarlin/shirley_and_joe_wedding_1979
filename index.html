@@ -27,9 +27,19 @@
         #infoModal {
             margin: auto;
             margin-top: 4em;
+
         }
         #audioPlayModal, #audioPauseModal{
             float: right;
+        }
+        @media only screen and (max-width: 768px){
+            #infoModal {
+                width: 80%;
+                align-content:center
+            }
+            #frame{
+                width: calc(100% - 1em);
+            }
         }
     </style>
 </head>
@@ -69,8 +79,7 @@
         </div>
     <script>
 $('#infoModal').show();
-
-// setTimeout(()=>{$('#infoModal').hide()}, 8000);
+setTimeout(()=>{$('#infoModal').hide()}, 8000);
 
 
 $.backstretch([
