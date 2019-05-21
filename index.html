@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <style>
-        .modals{
+        .modal{
             
             width: fit-content;
             background: aliceblue;
@@ -51,7 +51,7 @@
     </style>
 </head>
 <body>
-        <div class="modals fade" id="infoModal" tabindex="-1" role="dialog" style="display:none">
+        <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" style="display:none">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class=" text-center ">
@@ -187,13 +187,13 @@ $.backstretch([
     ],
     {
     duration: 3000,
-    fade:900, alignY:'bottom' 
+    fade:900, alignY:'top' 
 });
 
 let playing = false
 $('body').on('click',toggleAudio);
 function toggleAudio(){
-    $('.modals').hide()
+    $('.modal').hide()
     if (playing){
         $('#audio').trigger('pause');
         playing = false;
