@@ -210,7 +210,7 @@
             </div>
         </div>
         
-        <audio id="audio1" style='display:none'  preload='metadata' volume='1'>
+        <audio id="audio1" style='display:none'   preload='metadata' volume='1'>
             <source src='assets/Joe and Shirley Carlin June 16 1979(clipped).mp3' type='audio/mpeg'/>
             <source src='assets/Joe and Shirley Carlin June 16 1979(clipped).ogg' type='audio/ogg'/>
         </audio>
@@ -218,42 +218,25 @@
             <source src='assets/09 - With A Little Help From My Friends.mp3' type='audio/mpeg'/>
             <source src='assets/09 - With A Little Help From My Friends.ogg' type='audio/ogg'/>
         </audio>
-        <audio id="audio3" style='display:none' loop='true'  preload='metadata' volume='1'>
-            <source src='assets/07 Here Comes The Sun.m4a' type='audio/m4a'/>
-           
-        </audio>
+        
     <script>
 $(document).ready(function() {
 // boolean for pausing and starting slideshow and variable for defining selector of current audio element
-let playing = false, audio =$('#audio1'), speedUpTimer;
+let playing = false, audio =$('#audio1'), speedUpTimer, slideshow,
 options =  {
     fade: 900, 
     centeredY: false,
     paused: false,
     duration: 8750
-}
-
-
-audio.on('ended', function(){
-    audio = $('#audio2');
-    audio.trigger('play');
-    audio.on('ended', function() {
-        audio = $('#audio3');
-        audio.trigger('play');   
-    })
-
-});
-audio.one('play', function() {
-    backstretch();
-    toggleAudio();
-    $('body').on('click',toggleAudio);
-    speedUpTimer = setTimeout(() => {$('body').data('backstretch').options.duration=3000}, 245*1000)
-})
-
-$('#infoModal').show();
-
-
-let string = 'assets/IMG_1078.JPG,assets/IMG_1080.JPG,assets/IMG_1081.JPG,assets/IMG_1083.JPG,assets/IMG_1084.JPG,assets/IMG_1085.JPG,'+
+},
+itunesArray = [ 
+    {
+        src: 'assets/07 Here Comes The Sun.m4a', 
+        type: 'audio/mp4'
+    }
+],
+itunesIndex = 0,
+picString = 'assets/IMG_1078.JPG,assets/IMG_1080.JPG,assets/IMG_1081.JPG,assets/IMG_1083.JPG,assets/IMG_1084.JPG,assets/IMG_1085.JPG,'+
 'assets/IMG_1087.JPG,assets/IMG_1088.JPG,assets/IMG_1092.JPG,assets/IMG_1094.JPG,assets/IMG_1095.JPG,assets/IMG_1096.JPG,assets/IMG_1097.JPG,'+
 'assets/IMG_1098.JPG,assets/IMG_1101.JPG,assets/IMG_1103.JPG,assets/IMG_1106.JPG,assets/IMG_1111.JPG,assets/IMG_1112.JPG,assets/IMG_1116.JPG,'+
 'assets/IMG_1118.JPG,assets/IMG_1119.JPG,assets/IMG_1120.JPG,assets/IMG_1121.JPG,assets/IMG_1122.JPG,assets/IMG_1123.JPG,assets/IMG_1124.JPG,'+
@@ -278,31 +261,54 @@ let string = 'assets/IMG_1078.JPG,assets/IMG_1080.JPG,assets/IMG_1081.JPG,assets
 'assets/IMG_1226.JPG,assets/IMG_1227.JPG,assets/IMG_1229.JPG,assets/IMG_1230.JPG,assets/IMG_1231.JPG,assets/IMG_1232.JPG,assets/IMG_1233.JPG,'+
 'assets/IMG_1234.JPG,assets/IMG_1235.JPG,assets/IMG_1236.JPG,assets/IMG_1237.JPG,assets/IMG_1238.JPG,assets/IMG_1239.JPG,assets/IMG_1240.JPG,'+
 'assets/IMG_1241.JPG,assets/IMG_1245.JPG,assets/IMG_1246.JPG,assets/IMG_1247.JPG,assets/IMG_1248.JPG,assets/IMG_1249.JPG,assets/IMG_1250.JPG,'+
-'assets/IMG_1251.JPG,assets/IMG_1252.JPG,assets/IMG_1253.JPG,assets/IMG_1254.JPG,assets/IMG_1255.JPG,assets/IMG_1257.JPG,assets/IMG_1258.JPG'
-var pics = string.split(',')
-// pics = pics.map((item, i) => {
-//     if(i < 28) 
-//         return [item, {  duration: 8570}]
-//     else
-//         return [item, { duration: 5000}];
-// })
-console.log(pics)
+'assets/IMG_1251.JPG,assets/IMG_1252.JPG,assets/IMG_1253.JPG,assets/IMG_1254.JPG,assets/IMG_1255.JPG,assets/IMG_1257.JPG,assets/IMG_1258.JPG',
+pics = picString.split(',');
+
+//beginning background
 $.backstretch('assets/IMG_1075.jpg',{centeredY:false });
 
-function backstretch() {
-    $.backstretch(pics,options);
-}
+//introduction to slideshow modal
+$('#infoModal').show();
 
+//trigger beginning of slideshow
 $('body').one('click', function(){
     $('.modal').hide()
     $('#audioLoadingModal').show()
     audio.trigger('play')
 })
 
+//start slideshow when audio is loaded and set event listener for pausing/ restarting
+audio.one('play', function() {
+    backstretch();
+    toggleAudio();
+    $('body').on('click',toggleAudio);
+    speedUpTimer = setTimeout(() => {$('body').data('backstretch').options.duration=3000}, 245*1000)
+})
+
+//trigger second audio element with dual source and set event listener for future mp4 audio changes
+audio.one('ended', function(){
+    audio = $('#audio2');
+    audio.trigger('play')
+    audio.on('ended', changeAudio)
+});
+
+//mp4 audio change callback
+function changeAudio() {
+    audio.empty().append($('<source>').attr(itunesArray[itunesIndex]))
+    audio.trigger('play')
+}
+
+//slideshow function
+function backstretch() {
+    $.backstretch(pics,options);
+}
+
+// pause/ resume slideshow and audio func
 function toggleAudio(){
     $('.modal').hide()
     if (playing){
         if ($('body').data('backstretch').index < 28)
+            //clear timer for duration adjustment after wedding photos
             clearTimeout(speedUpTimer)
         audio.trigger('pause');
         $('body').data('backstretch').pause();
@@ -312,6 +318,7 @@ function toggleAudio(){
     }   
     else{
         if ($('body').data('backstretch').index < 28)
+            //reset timer for duration adjustment after wedding photos
             speedUpTimer = setTimeout(() => {$('body').data('backstretch').options.duration=3000}, (27 - $('body').data('backstretch').index) * 8.75 *1000)
         audio.trigger('play')
         $('body').data('backstretch').resume();
