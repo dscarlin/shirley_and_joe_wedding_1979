@@ -13,13 +13,14 @@
             
             width: fit-content;
             background: white;
-            font-family:fantasy;
+           
             border-radius: 1em;
             padding: 4em;
             transition: 1s
         }
         p, h2, h1 {
             text-align: center;
+            font-family:fantasy;
         }
         #frame {
             border: .5em groove gold;
@@ -33,12 +34,22 @@
             width: 400px;
             max-width: 80vw;
         }
-        #audioPlayModal, #audioPauseModal{
+        #audioPlayModal, #audioPauseModal, #audioLoadingModal{
             float: right;
             padding: 0 1em;
         }
+
+        #audioLoadingModal p,#audioLoadingModal div  {
+            display: inline-block;
+            margin: 5px;
+        }
+
+        #audioLoadingModal p {
+            font-size: 24px
+        }
+
         body {
-            background-image: url(assets/IMG_1075.JPG);
+            background-image: url(assets/IMG_1075.jpg);
             background-repeat: no-repeat;
             background-size:auto;
         }
@@ -50,6 +61,87 @@
             padding: 1em;
             border-radius: 1em;
             outline: unset;
+        }
+
+        .loader {
+            color: black;
+            font-size: 24px;
+            text-indent: -9999em;
+            /* overflow: visible; */
+            width: 1em;
+            height: 1em;
+            border-radius: 50%;
+            margin: 24px auto;
+            position: relative;
+            -webkit-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+            animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+        }
+        @-webkit-keyframes load6 {
+        0% {
+            box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+        }
+        5%,
+        95% {
+            box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+        }
+        10%,
+        59% {
+            box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+        }
+        20% {
+            box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+        }
+        38% {
+            box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+        }
+        100% {
+            box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+        }
+        }
+        @keyframes load6 {
+        0% {
+            box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+        }
+        5%,
+        95% {
+            box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+        }
+        10%,
+        59% {
+            box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+        }
+        20% {
+            box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+        }
+        38% {
+            box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+        }
+        100% {
+            box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+        }
+        }
+        @-webkit-keyframes round {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+        }
+        @keyframes round {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
         }
         @media only screen and (max-width: 768px){
             #infoModal {
@@ -89,12 +181,21 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="audioLoadingModal" tabindex="-1" role="dialog" style="display:none">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-body text-center ">
+                    <p>Loading</p>
+                    <p><div class="loader">Loading...</div></p>
+                </div>
+                </div>
+            </div>
+        </div>
         <div class="modal fade" id="audioPlayModal" tabindex="-1" role="dialog" style="display:none">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-body text-center ">
-                    <p>Audio Started!</p>
-                    <p id="delay"><small>* allow a delay for iOS devices *</small></p>
+                    <p>Slideshow Playing!</p>
                 </div>
                 </div>
             </div>
@@ -103,56 +204,123 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-body text-center ">
-                    <p>Audio Paused!</p>
+                    <p>Slideshow Paused!</p>
                 </div>
                 </div>
             </div>
         </div>
         
-        <audio id="audio" style='display:none' loop='true' preload='metadata' volume='1'>
+        <audio id="audio1" style='display:none'  preload='metadata' volume='1'>
             <source src='assets/Joe and Shirley Carlin June 16 1979(clipped).mp3' type='audio/mpeg'/>
             <source src='assets/Joe and Shirley Carlin June 16 1979(clipped).ogg' type='audio/ogg'/>
         </audio>
+        <audio id="audio2" style='display:none'  preload='metadata' volume='1'>
+            <source src='assets/09 - With A Little Help From My Friends.mp3' type='audio/mpeg'/>
+            <source src='assets/09 - With A Little Help From My Friends.ogg' type='audio/ogg'/>
+        </audio>
+        <audio id="audio3" style='display:none' loop='true'  preload='metadata' volume='1'>
+            <source src='assets/07 Here Comes The Sun.m4a' type='audio/m4a'/>
+           
+        </audio>
     <script>
-let playing = false, slideshow = false;
-$('#infoModal').show();
-// setTimeout(()=>{$('#infoModal').hide(); if(!slideshow)backstretch(); slideshow = true;}, 10 * 1000);
-let string = 'assets/IMG_1078.JPG,assets/IMG_1080.JPG,assets/IMG_1081.JPG,assets/IMG_1083.JPG,assets/IMG_1084.JPG,assets/IMG_1085.JPG,assets/IMG_1087.JPG,assets/IMG_1088.JPG,assets/IMG_1092.JPG,assets/IMG_1094.JPG,assets/IMG_1095.JPG,assets/IMG_1096.JPG,assets/IMG_1097.JPG,assets/IMG_1098.JPG,assets/IMG_1101.JPG,assets/IMG_1103.JPG,assets/IMG_1106.JPG,assets/IMG_1111.JPG,assets/IMG_1112.JPG,assets/IMG_1116.JPG,assets/IMG_1118.JPG,assets/IMG_1119.JPG,assets/IMG_1120.JPG,assets/IMG_1121.JPG,assets/IMG_1122.JPG,assets/IMG_1123.JPG,assets/IMG_1124.JPG,assets/IMG_1125.JPG,'+
-'assets/IMG_0975.JPG,assets/IMG_0976.jpg,assets/IMG_0977.jpg,assets/IMG_0978.jpg,assets/IMG_0980.jpg,assets/IMG_0981.jpg,assets/IMG_0982.jpg,assets/IMG_0983.jpg,assets/IMG_0984.jpg,assets/IMG_0986.jpg,assets/IMG_0988.jpg,assets/IMG_0989.jpg,assets/IMG_0990.jpg,assets/IMG_0991.jpg,assets/IMG_0992.jpg,assets/IMG_0993.jpg,assets/IMG_0996.jpg,assets/IMG_0997.jpg,assets/IMG_0998.jpg,assets/IMG_0999.jpg,assets/IMG_1001.jpg,assets/IMG_1002.jpg,assets/IMG_1003.jpg,assets/IMG_1004.jpg,assets/IMG_1005.jpg,assets/IMG_1006.jpg,assets/IMG_1007.jpg,assets/IMG_1008.jpg,assets/IMG_1009.jpg,assets/IMG_1010.jpg,assets/IMG_1011.jpg,assets/IMG_1012.jpg,assets/IMG_1013.jpg,assets/IMG_1014.jpg,assets/IMG_1015.jpg,assets/IMG_1016.jpg,assets/IMG_1017.jpg,assets/IMG_1019.jpg,assets/IMG_1020.jpg,assets/IMG_1021.jpg,assets/IMG_1022.jpg,assets/IMG_1023.jpg,assets/IMG_1024.jpg,assets/IMG_1025.jpg,assets/IMG_1026.jpg,assets/IMG_1027.jpg,assets/IMG_1028.jpg,assets/IMG_1029.jpg,assets/IMG_1030.jpg,assets/IMG_1031.jpg,assets/IMG_1032.jpg,assets/IMG_1033.jpg,assets/IMG_1034.jpg,assets/IMG_1035.jpg,assets/IMG_1036.jpg,assets/IMG_1037.jpg,assets/IMG_1038.jpg,assets/IMG_1039.jpg,assets/IMG_1040.jpg,assets/IMG_1041.jpg,assets/IMG_1045.jpg,assets/IMG_1046.jpg,assets/IMG_1047.jpg,assets/IMG_1048.jpg,assets/IMG_1049.jpg,assets/IMG_1050.jpg,assets/IMG_1051.jpg,assets/IMG_1052.jpg,assets/IMG_1054.jpg,assets/IMG_1055.jpg,assets/IMG_1056.jpg,assets/IMG_1057.jpg,assets/IMG_1058.jpg,assets/IMG_1059.jpg,assets/IMG_1060.JPG,assets/IMG_1062.jpg,assets/IMG_1063.jpg,assets/IMG_1064.jpg,assets/IMG_1065.jpg,assets/IMG_1066.jpg,assets/IMG_1067.jpg,assets/IMG_1068.jpg,assets/IMG_1069.jpg,assets/IMG_1070.jpg,assets/IMG_1071.jpg,assets/IMG_1072.jpg,assets/IMG_1073.jpg'
-let array = string.split(',')
-$.backstretch('assets/IMG_1075.jpg',{centeredY:false });
-
-function backstretch() {
-    slideshow = true
-    $.backstretch(array,
-    {
-    duration: 3000,
-    fade:900, centeredY:false 
-});
-
+$(document).ready(function() {
+// boolean for pausing and starting slideshow and variable for defining selector of current audio element
+let playing = false, audio =$('#audio1'), speedUpTimer;
+options =  {
+    fade: 900, 
+    centeredY: false,
+    paused: false,
+    duration: 8750
 }
 
 
-$('body').on('click',toggleAudio);
+audio.on('ended', function(){
+    audio = $('#audio2');
+    audio.trigger('play');
+    audio.on('ended', function() {
+        audio = $('#audio3');
+        audio.trigger('play');   
+    })
+
+});
+audio.one('play', function() {
+    backstretch();
+    toggleAudio();
+    $('body').on('click',toggleAudio);
+    speedUpTimer = setTimeout(() => {$('body').data('backstretch').options.duration=3000}, 245*1000)
+})
+
+$('#infoModal').show();
+
+
+let string = 'assets/IMG_1078.JPG,assets/IMG_1080.JPG,assets/IMG_1081.JPG,assets/IMG_1083.JPG,assets/IMG_1084.JPG,assets/IMG_1085.JPG,'+
+'assets/IMG_1087.JPG,assets/IMG_1088.JPG,assets/IMG_1092.JPG,assets/IMG_1094.JPG,assets/IMG_1095.JPG,assets/IMG_1096.JPG,assets/IMG_1097.JPG,'+
+'assets/IMG_1098.JPG,assets/IMG_1101.JPG,assets/IMG_1103.JPG,assets/IMG_1106.JPG,assets/IMG_1111.JPG,assets/IMG_1112.JPG,assets/IMG_1116.JPG,'+
+'assets/IMG_1118.JPG,assets/IMG_1119.JPG,assets/IMG_1120.JPG,assets/IMG_1121.JPG,assets/IMG_1122.JPG,assets/IMG_1123.JPG,assets/IMG_1124.JPG,'+
+'assets/IMG_1125.JPG,assets/IMG_0975.JPG,assets/IMG_0976.jpg,assets/IMG_0977.jpg,assets/IMG_0978.jpg,assets/IMG_0980.jpg,assets/IMG_0981.jpg,'+
+'assets/IMG_0982.jpg,assets/IMG_0983.jpg,assets/IMG_0984.jpg,assets/IMG_0986.jpg,assets/IMG_0988.jpg,assets/IMG_0989.jpg,assets/IMG_0990.jpg,'+
+'assets/IMG_0991.jpg,assets/IMG_0992.jpg,assets/IMG_0993.jpg,assets/IMG_0996.jpg,assets/IMG_0997.jpg,assets/IMG_0998.jpg,assets/IMG_0999.jpg,'+
+'assets/IMG_1001.jpg,assets/IMG_1002.jpg,assets/IMG_1003.jpg,assets/IMG_1004.jpg,assets/IMG_1005.jpg,assets/IMG_1006.jpg,assets/IMG_1007.jpg,'+
+'assets/IMG_1008.jpg,assets/IMG_1009.jpg,assets/IMG_1010.jpg,assets/IMG_1011.jpg,assets/IMG_1012.jpg,assets/IMG_1013.jpg,assets/IMG_1014.jpg,'+
+'assets/IMG_1015.jpg,assets/IMG_1016.jpg,assets/IMG_1017.jpg,assets/IMG_1019.jpg,assets/IMG_1020.jpg,assets/IMG_1021.jpg,assets/IMG_1022.jpg,'+
+'assets/IMG_1023.jpg,assets/IMG_1024.jpg,assets/IMG_1025.jpg,assets/IMG_1026.jpg,assets/IMG_1027.jpg,assets/IMG_1028.jpg,assets/IMG_1029.jpg,'+
+'assets/IMG_1030.jpg,assets/IMG_1031.jpg,assets/IMG_1032.jpg,assets/IMG_1033.jpg,assets/IMG_1034.jpg,assets/IMG_1035.jpg,assets/IMG_1036.jpg,'+
+'assets/IMG_1037.jpg,assets/IMG_1038.jpg,assets/IMG_1039.jpg,assets/IMG_1040.jpg,assets/IMG_1041.jpg,assets/IMG_1045.jpg,assets/IMG_1046.jpg,'+
+'assets/IMG_1047.jpg,assets/IMG_1048.jpg,assets/IMG_1049.jpg,assets/IMG_1050.jpg,assets/IMG_1051.jpg,assets/IMG_1052.jpg,assets/IMG_1054.jpg,'+
+'assets/IMG_1055.jpg,assets/IMG_1056.jpg,assets/IMG_1057.jpg,assets/IMG_1058.jpg,assets/IMG_1059.jpg,assets/IMG_1060.JPG,assets/IMG_1062.jpg,'+
+'assets/IMG_1063.jpg,assets/IMG_1064.jpg,assets/IMG_1065.jpg,assets/IMG_1066.jpg,assets/IMG_1067.jpg,assets/IMG_1068.jpg,assets/IMG_1069.jpg,'+
+'assets/IMG_1070.jpg,assets/IMG_1071.jpg,assets/IMG_1072.jpg,assets/IMG_1073.jpg,assets/IMG_1154.JPG,assets/IMG_1155.JPG,assets/IMG_1156.JPG,'+
+'assets/IMG_1157.JPG,assets/IMG_1159.JPG,assets/IMG_1160.JPG,assets/IMG_1163.JPG,assets/IMG_1165.JPG,assets/IMG_1166.JPG,assets/IMG_1167.JPG,'+
+'assets/IMG_1168.JPG,assets/IMG_1169.JPG,assets/IMG_1170.JPG,assets/IMG_1172.JPG,assets/IMG_1173.JPG,assets/IMG_1174.JPG,assets/IMG_1176.JPG,'+
+'assets/IMG_1178.JPG,assets/IMG_1191.JPG,assets/IMG_1192.JPG,assets/IMG_1196.JPG,assets/IMG_1197.JPG,assets/IMG_1198.JPG,assets/IMG_1199.JPG,'+
+'assets/IMG_1201.JPG,assets/IMG_1207.JPG,assets/IMG_1211.JPG,assets/IMG_1212.JPG,assets/IMG_1213.JPG,assets/IMG_1214.JPG,assets/IMG_1216.JPG,'+
+'assets/IMG_1217.JPG,assets/IMG_1219.JPG,assets/IMG_1221.JPG,assets/IMG_1222.JPG,assets/IMG_1223.JPG,assets/IMG_1224.JPG,assets/IMG_1225.JPG,'+
+'assets/IMG_1226.JPG,assets/IMG_1227.JPG,assets/IMG_1229.JPG,assets/IMG_1230.JPG,assets/IMG_1231.JPG,assets/IMG_1232.JPG,assets/IMG_1233.JPG,'+
+'assets/IMG_1234.JPG,assets/IMG_1235.JPG,assets/IMG_1236.JPG,assets/IMG_1237.JPG,assets/IMG_1238.JPG,assets/IMG_1239.JPG,assets/IMG_1240.JPG,'+
+'assets/IMG_1241.JPG,assets/IMG_1245.JPG,assets/IMG_1246.JPG,assets/IMG_1247.JPG,assets/IMG_1248.JPG,assets/IMG_1249.JPG,assets/IMG_1250.JPG,'+
+'assets/IMG_1251.JPG,assets/IMG_1252.JPG,assets/IMG_1253.JPG,assets/IMG_1254.JPG,assets/IMG_1255.JPG,assets/IMG_1257.JPG,assets/IMG_1258.JPG'
+var pics = string.split(',')
+// pics = pics.map((item, i) => {
+//     if(i < 28) 
+//         return [item, {  duration: 8570}]
+//     else
+//         return [item, { duration: 5000}];
+// })
+console.log(pics)
+$.backstretch('assets/IMG_1075.jpg',{centeredY:false });
+
+function backstretch() {
+    $.backstretch(pics,options);
+}
+
+$('body').one('click', function(){
+    $('.modal').hide()
+    $('#audioLoadingModal').show()
+    audio.trigger('play')
+})
+
 function toggleAudio(){
     $('.modal').hide()
-    if(!slideshow)
-        backstretch(); 
-    slideshow = true;
     if (playing){
-        $('#audio').trigger('pause');
+        if ($('body').data('backstretch').index < 28)
+            clearTimeout(speedUpTimer)
+        audio.trigger('pause');
+        $('body').data('backstretch').pause();
         playing = false;
         $('#audioPauseModal').show();
         setTimeout(()=>{$('#audioPauseModal').hide()}, 2000);
-
     }   
     else{
-        $('#audio').trigger('play')
+        if ($('body').data('backstretch').index < 28)
+            speedUpTimer = setTimeout(() => {$('body').data('backstretch').options.duration=3000}, (27 - $('body').data('backstretch').index) * 8.75 *1000)
+        audio.trigger('play')
+        $('body').data('backstretch').resume();
         playing = true;
-        $('#audioPlayModal').show();
-        setTimeout(()=>{$('#audioPlayModal').hide(); $('#delay').remove()}, 3000);
+        $('#audioPlayModal').show()
+        setTimeout(()=>{$('#audioPlayModal').hide()}, 3000);
     }
 } 
+})
     </script>
 </body>
 </html>
