@@ -297,6 +297,19 @@ audio.one('ended', function(){
     audio = $('#audio2');
     audio.trigger('play')
     audio.on('ended', changeAudio)
+    $('body').data('backstretch').pause();
+    $('#audioLoadingModal div.modal-body').empty()
+    setTimeout(() => $('#audioLoadingModal').show(), 250)
+    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('Please bare with us...')), 20 * 1000)
+    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('this can take a while')), 40 * 1000)
+    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('especially for mobile')), 60 * 1000)
+    checkAudioIsPlaying = setInterval(() => {
+        if(audio[0].currentTime > 0){
+            clearInterval(checkAudioIsPlaying)
+            $('body').data('backstretch').resume();
+            $('.modal').hide()
+        }
+    },200)
 });
 
 //mp4 audio change callback
@@ -305,7 +318,7 @@ function changeAudio() {
     ++itunesIndex
     audio.trigger('play')
     $('body').data('backstretch').pause();
-    $()
+    $('#audioLoadingModal div.modal-body').empty()
     setTimeout(() => $('#audioLoadingModal').show(), 250)
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('Please bare with us...')), 20 * 1000)
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('this can take a while')), 40 * 1000)
