@@ -222,7 +222,7 @@
     <script>
 $(document).ready(function() {
 // boolean for pausing and starting slideshow and variable for defining selector of current audio element
-let playing = false, audio =$('#audio1'), speedUpTimer, slideshow,
+let playing = false, audio = $('#audio1'), speedUpTimer, slideshow,
 options =  {
     fade: 900, 
     centeredY: false,
@@ -275,15 +275,22 @@ $('body').one('click', function(){
     $('.modal').hide()
     $('#audioLoadingModal').show()
     audio.trigger('play')
+    setTimeout(() => $('#audioLoadingModal').append($('<br/>'),$('<small>').text('Please bare with us...')), 20 * 1000)
+    setTimeout(() => $('#audioLoadingModal').append($('<br/>'),$('<small>').text('this can take a while')), 40 * 1000)
+    setTimeout(() => $('#audioLoadingModal').append($('<br/>'),$('<small>').text('especially for mobile')), 60 * 1000)
+
 })
 
 //start slideshow when audio is loaded and set event listener for pausing/ restarting
-audio.one('play', function() {
-    backstretch();
-    toggleAudio();
-    $('body').on('click',toggleAudio);
-    speedUpTimer = setTimeout(() => {$('body').data('backstretch').options.duration=3000}, 245*1000)
-})
+checkAudioIsPlaying = setInterval(() => {
+    if(audio[0].currentTime > 0){
+        backstretch();
+        toggleAudio();
+        $('body').on('click',toggleAudio);
+        speedUpTimer = setTimeout(() => {$('body').data('backstretch').options.duration=3000}, 245*1000)
+        clearInterval(checkAudioIsPlaying)
+    }
+},200);
 
 //trigger second audio element with dual source and set event listener for future mp4 audio changes
 audio.one('ended', function(){
