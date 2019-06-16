@@ -210,17 +210,17 @@
             </div>
         </div>
         
-        <audio id="audio1" style='display:none'   preload='metadata' volume='1'>
+        <audio id="audio1" style='display:none'   preload='auto' volume='1'>
             <source src='assets/Joe and Shirley Carlin June 16 1979(clipped).mp3' type='audio/mpeg'/>
             <source src='assets/Joe and Shirley Carlin June 16 1979(clipped).ogg' type='audio/ogg'/>
         </audio>
-        <audio id="audio2" style='display:none'  preload='metadata' volume='1'>
+        <audio id="audio2" style='display:none'  preload='auto' volume='1'>
             <source src='assets/09 - With A Little Help From My Friends.mp3' type='audio/mpeg'/>
             <source src='assets/09 - With A Little Help From My Friends.ogg' type='audio/ogg'/>
         </audio>
         
     <script>
-$(document).ready(function() {
+// $(document).ready(function() {
 // boolean for pausing and starting slideshow and variable for defining selector of current audio element
 let playing = false, audio = $('#audio1'), speedUpTimer, slideshow,
 options =  {
@@ -302,12 +302,21 @@ audio.one('ended', function(){
 //mp4 audio change callback
 function changeAudio() {
     audio.empty().append($('<source>').attr(itunesArray[itunesIndex]))
+    ++itunesIndex
     audio.trigger('play')
 }
 
 //slideshow function
 function backstretch() {
-    $.backstretch(pics,options);
+    $.backstretch(pics[0],options);
+    var slider = $('body').data('backstretch');
+    setTimeout(() => slider.resume(),8750)
+    var imgCount = 0  
+      var timer = setInterval(function(){
+        ++imgCount;
+        if(imgCount === (pics.length-1)) clearInterval(timer);
+        slider.images.push(pics[imgCount]);
+      },1000);
 }
 
 // pause/ resume slideshow and audio func
@@ -334,7 +343,7 @@ function toggleAudio(){
         setTimeout(()=>{$('#audioPlayModal').hide()}, 3000);
     }
 } 
-})
+// })
     </script>
 </body>
 </html>
