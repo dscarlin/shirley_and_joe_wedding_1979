@@ -262,8 +262,7 @@ picString = 'assets/IMG_1078.JPG,assets/IMG_1080.JPG,assets/IMG_1081.JPG,assets/
 'assets/IMG_1234.JPG,assets/IMG_1235.JPG,assets/IMG_1236.JPG,assets/IMG_1237.JPG,assets/IMG_1238.JPG,assets/IMG_1239.JPG,assets/IMG_1240.JPG,'+
 'assets/IMG_1241.JPG,assets/IMG_1245.JPG,assets/IMG_1246.JPG,assets/IMG_1247.JPG,assets/IMG_1248.JPG,assets/IMG_1249.JPG,assets/IMG_1250.JPG,'+
 'assets/IMG_1251.JPG,assets/IMG_1252.JPG,assets/IMG_1253.JPG,assets/IMG_1254.JPG,assets/IMG_1255.JPG,assets/IMG_1257.JPG,assets/IMG_1258.JPG',
-pics = picString.split(','),
-checkAudioIsPlaying;
+pics = picString.split(',');
 
 //beginning background
 $.backstretch('assets/IMG_1075.jpg',{centeredY:false });
@@ -298,16 +297,17 @@ audio.one('ended', function(){
     audio.trigger('play')
     audio.on('ended', changeAudio)
     $('body').data('backstretch').pause();
-    $('#audioLoadingModal div.modal-body').empty()
-    setTimeout(() => $('#audioLoadingModal').show(), 250)
+    $('#audioLoadingModal div.modal-body').empty().append($('<p><div class="loader">Loading...</div></p>'))
+    $('#audioLoadingModal').show()
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('Please bare with us...')), 20 * 1000)
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('this can take a while')), 40 * 1000)
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('especially for mobile')), 60 * 1000)
     checkAudioIsPlaying = setInterval(() => {
         if(audio[0].currentTime > 0){
-            clearInterval(checkAudioIsPlaying)
+            console.log('interval')
             $('body').data('backstretch').resume();
-            $('.modal').hide()
+            $('#audioLoadingModal').hide()
+            clearInterval(checkAudioIsPlaying)
         }
     },200)
 });
@@ -318,13 +318,14 @@ function changeAudio() {
     ++itunesIndex
     audio.trigger('play')
     $('body').data('backstretch').pause();
-    $('#audioLoadingModal div.modal-body').empty()
-    setTimeout(() => $('#audioLoadingModal').show(), 250)
+    $('#audioLoadingModal div.modal-body').empty().append($('<p><div class="loader">Loading...</div></p>'))
+    $('#audioLoadingModal').show()
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('Please bare with us...')), 20 * 1000)
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('this can take a while')), 40 * 1000)
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('especially for mobile')), 60 * 1000)
     checkAudioIsPlaying = setInterval(() => {
         if(audio[0].currentTime > 0){
+            console.log('next audio playing')
             clearInterval(checkAudioIsPlaying)
             $('body').data('backstretch').resume();
             $('.modal').hide()
