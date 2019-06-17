@@ -233,6 +233,10 @@ itunesArray = [
     {
         src: 'assets/07 Here Comes The Sun.m4a', 
         type: 'audio/mp4'
+    },
+    {
+        src: 'assets/1-07 All You Need Is Love.m4a', 
+        type: 'audio/mp4'
     }
 ],
 itunesIndex = 0,
@@ -297,7 +301,7 @@ audio.one('ended', function(){
     audio.trigger('play')
     audio.on('ended', changeAudio)
     $('body').data('backstretch').pause();
-    $('#audioLoadingModal div.modal-body').empty().append($('<p><div class="loader">Loading...</div></p>'))
+    $('#audioLoadingModal div.modal-body').empty().append($('<p>Loading</p><p><div class="loader">Loading...</div></p>'))
     $('#audioLoadingModal').show()
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('Please bare with us...')), 20 * 1000)
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('this can take a while')), 40 * 1000)
@@ -318,7 +322,7 @@ function changeAudio() {
     ++itunesIndex
     audio.trigger('play')
     $('body').data('backstretch').pause();
-    $('#audioLoadingModal div.modal-body').empty().append($('<p><div class="loader">Loading...</div></p>'))
+    $('#audioLoadingModal div.modal-body').empty().append($('<p>Loading</p><p><div class="loader">Loading...</div></p>'))
     $('#audioLoadingModal').show()
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('Please bare with us...')), 20 * 1000)
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('this can take a while')), 40 * 1000)
