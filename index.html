@@ -335,19 +335,21 @@ audio.one('ended', changeAudio)
 setTimeout(() => {
     
     checkSlideshowIsEnding = setInterval(()=> {
-        if($('body').data('backstretch').index == 179){
+        console.log('check ending')
+        console.log($('body').data('backstretch').index)
+        console.log($('body').data('backstretch').index == 1)
+        if($('body').data('backstretch').index == 1){
+            audio.off()
             toggler.off()
-            $('#audioLoadingModal div.modal-body').empty().append($('<a href="#"><button>Replay Slideshow</button></a>'))
-            $('#audioLoadingModal').show()
             $('body').data('backstretch').pause()
             $('body').data('backstretch').destroy(true)
             audio.animate({volume: 0}, 2000);
             $('audio src').attr('src','')
             clearInterval(checkSlideshowIsEnding)
         }
-    },500)
+    },1000)
    
-},1000 * 1000)
+},1000)
 
 //mp4 audio change callback
 function changeAudio() {
@@ -363,14 +365,14 @@ function changeAudio() {
     toggleAudio()
     audio.load()
     audio.trigger('play')
-    audio.on('canplay canplaythrough',function() {
+    audio.one('canplaythrough',function() {
         $('#audioLoadingModal div.modal-body').empty().append($('<br/>'),$('<small>').text('tap screen to resume'))
         nextReady = true
     //      // console.log('next audio playing')
     //      $('body').data('backstretch').resume();
     //     $('.modal').hide()
     })
-    audio.on('ended', changeAudio)
+    audio.one('ended', changeAudio)
     $('#audioLoadingModal div.modal-body').empty().append($('<p>Loading</p><p><div class="loader">Loading...</div></p>'))
     $('.modal').hide()
     
