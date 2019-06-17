@@ -335,9 +335,9 @@ audio.one('ended', changeAudio)
 setTimeout(() => {
     
     checkSlideshowIsEnding = setInterval(()=> {
-        console.log('check ending')
+        // console.log('check ending')
         console.log($('body').data('backstretch').index)
-        console.log($('body').data('backstretch').index == 179)
+        // console.log($('body').data('backstretch').index == 179)
         if($('body').data('backstretch').index == 179){
             audio.off()
             toggler.off()
@@ -349,7 +349,7 @@ setTimeout(() => {
         }
     },1000)
    
-},1000)
+},1000 * 1000)
 
 //mp4 audio change callback
 function changeAudio() {
