@@ -224,7 +224,7 @@
 
 
 // boolean for pausing and starting slideshow and variable for defining selector of current audio element
-let playing = false, audio = $('#audio1'), speedUpTimer, slideshow, nextReady,
+let playing = false, audio = $('#audio1'), speedUpTimer, slideshow, nextReady, toggler
 options =  {
     fade: 900, 
     centeredY: false,
@@ -303,7 +303,7 @@ checkAudioIsPlaying = setInterval(() => {
     if(audio[0].currentTime > 0){
         backstretch();
         toggleAudio();
-        $('body').on('click',toggleAudio);
+        toggler = $('body').on('click',toggleAudio);
         speedUpTimer = setTimeout(() => {$('body').data('backstretch').options.duration=3000}, 245*1000)
         clearInterval(checkAudioIsPlaying)
     }
@@ -335,8 +335,9 @@ audio.one('ended', changeAudio)
 setTimeout(() => {
     
     checkSlideshowIsEnding = setInterval(()=> {
-        if($('body').data('backstretch').index == 180){
-            $('#audioLoadingModal div.modal-body').empty().append($('<a href="#"><button>Replay Slideshow<button></a>'))
+        if($('body').data('backstretch').index == 179){
+            toggler.off()
+            $('#audioLoadingModal div.modal-body').empty().append($('<a href="#"><button>Replay Slideshow</button></a>'))
             $('#audioLoadingModal').show()
             $('body').data('backstretch').pause()
             $('body').data('backstretch').destroy(true)
