@@ -237,6 +237,10 @@ itunesArray = [
     {
         src: 'assets/1-07 All You Need Is Love.m4a', 
         type: 'audio/mp4'
+    },
+    {
+        src: 'assets/02 Carolina In My Mind.m4a', 
+        type: 'audio/mp4'
     }
 ],
 itunesIndex = 0,
@@ -306,21 +310,34 @@ audio.one('ended', function(){
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('Please bare with us...')), 20 * 1000)
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('this can take a while')), 40 * 1000)
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('especially for mobile')), 60 * 1000)
-    checkAudioIsPlaying = setInterval(() => {
-        if(audio[0].currentTime > 0){
+    // checkAudioIsPlaying = setInterval(() => {
+    audio.one('canplaythrough', ()=>{
+        // if(audio[0].currentTime > 0){
             console.log('interval')
             $('body').data('backstretch').resume();
             $('#audioLoadingModal').hide()
             clearInterval(checkAudioIsPlaying)
-        }
-    },200)
+        // }
+    // },200)
+    })
 });
 
+setTimeout(function(){
+    endSlideshow = setInterval(() => {
+        if($('body').data('backstretch').index = 180){
+            $('body').data('backstretch').destroy(true)
+            audio.animate({volume: 0}, 2000);
+        }
+        
+    }, 500)
+},1000 * 1000)
 //mp4 audio change callback
 function changeAudio() {
-    audio.empty().append($('<source>').attr(itunesArray[itunesIndex]))
-    ++itunesIndex
+    audio.remove()
+    audio = $('<audio>').append($('<source>').attr(itunesArray[itunesIndex]))
+    body.append(audio)
     audio.trigger('play')
+    itunesIndex++
     $('body').data('backstretch').pause();
     $('#audioLoadingModal div.modal-body').empty().append($('<p>Loading</p><p><div class="loader">Loading...</div></p>'))
     $('#audioLoadingModal').show()
