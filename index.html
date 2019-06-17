@@ -210,19 +210,21 @@
             </div>
         </div>
         
-        <audio id="audio1" style='display:none'   preload='auto' volume='1'>
+        <audio id="audio1" style='display:none'   preload='none' volume='1'>
             <source src='assets/Joe and Shirley Carlin June 16 1979(clipped).mp3' type='audio/mpeg'/>
             <source src='assets/Joe and Shirley Carlin June 16 1979(clipped).ogg' type='audio/ogg'/>
         </audio>
-        <audio id="audio2" style='display:none'  preload='auto' volume='1'>
+        <!-- <audio id="audio2" style='display:none'  preload='auto' volume='1'>
             <source src='assets/09 - With A Little Help From My Friends.mp3' type='audio/mpeg'/>
             <source src='assets/09 - With A Little Help From My Friends.ogg' type='audio/ogg'/>
-        </audio>
+        </audio> -->
         
     <script>
-// $(document).ready(function() {
+
+
+
 // boolean for pausing and starting slideshow and variable for defining selector of current audio element
-let playing = false, audio = $('#audio1'), speedUpTimer, slideshow,
+let playing = false, audio = $('#audio1'), speedUpTimer, slideshow, nextReady,
 options =  {
     fade: 900, 
     centeredY: false,
@@ -231,16 +233,24 @@ options =  {
 },
 itunesArray = [ 
     {
-        src: 'assets/07 Here Comes The Sun.m4a', 
-        type: 'audio/mp4'
+        src:'assets/09 - With A Little Help From My Friends.mp3',
+        type:'audio/mpeg',
+        // style:'display:none'
     },
     {
-        src: 'assets/1-07 All You Need Is Love.m4a', 
-        type: 'audio/mp4'
+        src: 'assets/07 Here Comes The Sun.m4a', 
+        type: 'audio/mp4',
+        // style:'display:none'
     },
     {
         src: 'assets/02 Carolina In My Mind.m4a', 
-        type: 'audio/mp4'
+        // type: 'audio/mp4',
+        // style:'display:none'
+    },
+    {
+        src: 'assets/1-07 All You Need Is Love.m4a', 
+        // type: 'audio/mp4',
+        // style:'display:none'
     }
 ],
 itunesIndex = 0,
@@ -279,13 +289,13 @@ $.backstretch('assets/IMG_1075.jpg',{centeredY:false });
 $('#infoModal').show();
 
 //trigger beginning of slideshow
-$('body').one('click', function(){
+$('#slideshow').one('click', function(){
     $('.modal').hide()
     $('#audioLoadingModal').show()
     audio.trigger('play')
     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('Please bare with us...')), 20 * 1000)
-    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('this can take a while')), 40 * 1000)
-    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('especially for mobile')), 60 * 1000)
+    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('getting close')), 40 * 1000)
+    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('almost ready!')), 60 * 1000)
 })
 
 //start slideshow when audio is loaded and set event listener for pausing/ restarting
@@ -300,60 +310,84 @@ checkAudioIsPlaying = setInterval(() => {
 },200);
 
 //trigger second audio element with dual source and set event listener for future mp4 audio changes
-audio.one('ended', function(){
-    audio = $('#audio2');
-    audio.trigger('play')
-    audio.on('ended', changeAudio)
-    $('body').data('backstretch').pause();
-    $('#audioLoadingModal div.modal-body').empty().append($('<p>Loading</p><p><div class="loader">Loading...</div></p>'))
-    $('#audioLoadingModal').show()
-    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('Please bare with us...')), 20 * 1000)
-    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('this can take a while')), 40 * 1000)
-    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('especially for mobile')), 60 * 1000)
-    // checkAudioIsPlaying = setInterval(() => {
-    audio.one('canplaythrough', ()=>{
-        // if(audio[0].currentTime > 0){
-            console.log('interval')
-            $('body').data('backstretch').resume();
-            $('#audioLoadingModal').hide()
-            clearInterval(checkAudioIsPlaying)
-        // }
-    // },200)
-    })
-});
+audio.one('ended', changeAudio)
+//     // audio = $('#audio2'); // issue mobile
+//     audio.attr(itunesArray[itunesIndex])
+//     ++itunesIndex
+//     audio.trigger('play')
+//     audio.on('ended', changeAudio)
+//     $('body').data('backstretch').pause();
+//     $('#audioLoadingModal div.modal-body').empty().append($('<p>Loading</p><p><div class="loader">Loading...</div></p>'))
+//     $('#audioLoadingModal').show()
+//     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('Please bare with us...')), 20 * 1000)
+//     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('this can take a while')), 40 * 1000)
+//     setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('especially for mobile')), 60 * 1000)
+//     checkAudioIsPlaying = setInterval(() => {
+//         if(audio[0].currentTime > 0){
+//             console.log('interval')
+//             $('body').data('backstretch').resume();
+//             $('#audioLoadingModal').hide()
+//             clearInterval(checkAudioIsPlaying)
+//         }
+//     },200)
 
-setTimeout(function(){
-    endSlideshow = setInterval(() => {
-        if($('body').data('backstretch').index = 180){
+
+setTimeout(() => {
+    
+    checkSlideshowIsEnding = setInterval(()=> {
+        if($('body').data('backstretch').index == 180){
+            $('#audioLoadingModal div.modal-body').empty().append($('<a href="#"><button>Replay Slideshow<button></a>'))
+            $('#audioLoadingModal').show()
+            $('body').data('backstretch').pause()
             $('body').data('backstretch').destroy(true)
             audio.animate({volume: 0}, 2000);
+            $('audio src').attr('src','')
+            clearInterval(checkSlideshowIsEnding)
         }
-        
-    }, 500)
+    },500)
+   
 },1000 * 1000)
+
 //mp4 audio change callback
 function changeAudio() {
+    // audio.attr({src:'',type:''}) // doesn't work
+    // audio.attr(itunesArray[itunesIndex])
+    
+    // audio.empty().append('<src>').attr(itunesArray[itunesIndex]) //works ios issue pc
+
     audio.remove()
-    audio = $('<audio>').append($('<source>').attr(itunesArray[itunesIndex]))
-    body.append(audio)
+    audio = $('<audio>').attr(itunesArray[itunesIndex]) //issue ios
+    $('body').append(audio)
+    ++itunesIndex
+    toggleAudio()
+    audio.load()
     audio.trigger('play')
-    itunesIndex++
-    $('body').data('backstretch').pause();
+    audio.on('canplay canplaythrough',function() {
+        $('#audioLoadingModal div.modal-body').empty().append($('<br/>'),$('<small>').text('tap screen to resume'))
+        nextReady = true
+    //      // console.log('next audio playing')
+    //      $('body').data('backstretch').resume();
+    //     $('.modal').hide()
+    })
+    audio.on('ended', changeAudio)
     $('#audioLoadingModal div.modal-body').empty().append($('<p>Loading</p><p><div class="loader">Loading...</div></p>'))
-    $('#audioLoadingModal').show()
-    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('Please bare with us...')), 20 * 1000)
-    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('this can take a while')), 40 * 1000)
-    setTimeout(() => $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('especially for mobile')), 60 * 1000)
+    $('.modal').hide()
+    
+    setTimeout(() => {if(!playing) $('#audioLoadingModal').show() }, 5 * 1000)
+    setTimeout(() => {if(!nextReady) $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('Please bare with us...'))}, 20 * 1000)
+    setTimeout(() => {if(!nextReady) $('#audioLoadingModal div.modal-body').append($('<br/>'),$('<small>').text('almost ready...'))}, 40 * 1000)
     checkAudioIsPlaying = setInterval(() => {
         if(audio[0].currentTime > 0){
-            console.log('next audio playing')
+            // console.log('next audio playing')
+            if(!playing){
+                toggleAudio()
+                $('.modal').hide()
+            }
+
             clearInterval(checkAudioIsPlaying)
-            $('body').data('backstretch').resume();
-            $('.modal').hide()
         }
     },200)
 }
-
 //slideshow function
 function backstretch() {
     $.backstretch(pics[0],options);
@@ -369,6 +403,7 @@ function backstretch() {
 
 // pause/ resume slideshow and audio func
 function toggleAudio(){
+    nextReady = false
     $('.modal').hide()
     if (playing){
         if ($('body').data('backstretch').index < 28)
@@ -391,7 +426,7 @@ function toggleAudio(){
         setTimeout(()=>{$('#audioPlayModal').hide()}, 3000);
     }
 } 
-// })
+
     </script>
 </body>
 </html>
